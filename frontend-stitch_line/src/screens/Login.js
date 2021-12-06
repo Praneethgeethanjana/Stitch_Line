@@ -2,14 +2,35 @@ import { Form, Button } from "react-bootstrap";
 // import {useHistory} from 'react-router-dom'
 import { useState } from "react";
 import '../screens/css/Login.css'
-
+import { useHistory } from "react-router";
+import axios from "axios";
 
 
 const Login = () => {
-    //const navigation = useHistory();
+    const navigation = useHistory();
 
     const [username, setusername] = useState("");
     const [password, setpassword] = useState("");
+
+    function loginUser() {
+      axios({
+        method: "POST",
+        url: `http://localhost:8080/api/v1/service/login/user/${username}/${password}`,
+      })
+        .then((res) => {
+          if (res.data == "ADMINDETAILRIGHT") {
+            navigation.push("/program");
+          } else {
+            setusername("");
+            setpassword("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+  
     return (
 
         <div
@@ -56,7 +77,7 @@ const Login = () => {
               <h6 style={{color:'#A7BBC7',marginTop:'25px',marginBottom:'20px'}}>Forget Password?</h6>
   
         <Button
-        //   onClick={loginAdmin}
+          onClick={loginUser}
           className="mt-5"
           style={{ borderRadius: "12px", width: "130px",marginLeft:'60%' }}
           variant="outline-primary"

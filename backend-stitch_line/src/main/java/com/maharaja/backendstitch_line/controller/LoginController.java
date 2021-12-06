@@ -20,7 +20,7 @@ public class LoginController {
 
 
 
-    @PostMapping("/login/{username}/{password}")
+    @PostMapping("/user/{username}/{password}")
     public ResponseEntity loginUser(@PathVariable String username, @PathVariable String password){
 
         return ResponseEntity.ok(loginService.loginUser(username,password));

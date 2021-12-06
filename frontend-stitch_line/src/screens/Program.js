@@ -1,5 +1,6 @@
 import { Button, Form, FormControl, Table, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
+import axios from "axios";
 
 const Program = () => {
 
@@ -10,6 +11,64 @@ const Program = () => {
    
 
     const [searchId, setsearchId] = useState("");
+
+     // add Program
+     function addProgram(){
+      axios({
+        method: "POST",
+        url: `http://localhost:8080/api/v1/service/program`,
+        data:{
+          pid:pid,
+          name:name,
+          start:start,
+          end:end
+  
+        },  
+      }).then((res)=>{
+        alert(res.data.message);
+      });
+    }
+
+
+      //update Program
+      function updateProgram(){
+        axios({
+          method: "PUT",
+          url: `http://localhost:8080/api/v1/service/program`,
+          data:{
+            pid:pid,
+            name:name,
+            start:start,
+            end:end
+          },  
+        }).then((res)=>{
+          alert(res.data.message);
+        });
+      }
+
+         // search program
+  function searchProgram() {
+    axios({
+      method: "GET",
+      url: `http://localhost:8080/api/v1/service/program/${searchId}`,
+    }).then((res) => {
+      setPid(res.data.pid);
+      setName(res.data.name);
+      setStart(res.data.start);
+      setEnd(res.data.end);
+    });
+  }
+
+   // delete program
+   function deleteProgram() {
+    axios({
+      method: "DELETE",
+      url: `http://localhost:8080/api/v1/service/program/${searchId}`,
+    }).then((res) => {
+      console.log(res.data);
+    });
+  }
+    
      
 
     return (
@@ -70,9 +129,9 @@ const Program = () => {
           </Form>
         </div>
         <div className="m-4">
-          <Button  variant="primary">Add New Program</Button>{" "}
-          <Button style={{color:'white'}} variant="warning">Update Program</Button>{" "}
-          <Button  variant="danger">Remove Program</Button>{" "}
+          <Button onClick={addProgram}  variant="primary">Add New Program</Button>{" "}
+          <Button onClick={updateProgram} style={{color:'white'}} variant="warning">Update Program</Button>{" "}
+          <Button onClick={deleteProgram}  variant="danger">Remove Program</Button>{" "}
         </div>
         <Table striped bordered hover className="mt-5">
           <thead>
