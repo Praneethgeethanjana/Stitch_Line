@@ -6,7 +6,12 @@ import { useState } from "react";
 const Register = () => {
 
     const [username, setusername] = useState("");
+    const [fullname,setfullname] = useState("");
+    const [mobile,setmobile] = useState("");
+    const [dob,setdob] = useState("");
+    const [gender,setgender] = useState("");
     const [password, setpassword] = useState("");
+   
 
 
     return (
@@ -50,7 +55,9 @@ const Register = () => {
           className="mt-5 w-75" style={{borderRadius:'12px',marginLeft:'11%'}} size="lg" type="text" placeholder="User Name" />
 
           
-        <Form.Control 
+        <Form.Control onChange={(value) =>{
+          setfullname(value.currentTarget.value);
+        }} 
          
           className="mt-5  w-75"
           style={{ borderRadius: "12px",marginLeft:'11%'}}
@@ -59,7 +66,9 @@ const Register = () => {
           placeholder="Full Name"
         />
 
-        <Form.Control 
+        <Form.Control onChange={(value) => {
+          setmobile(value.currentTarget.value);
+        }}
          
          className="mt-5  w-75"
          style={{ borderRadius: "12px",marginLeft:'11%'}}
@@ -69,7 +78,9 @@ const Register = () => {
        />
 
         <h5 className="mt-5 ml-0" style={{ color: "#fff" }}>Date of Birth</h5>
-       <Form.Control  
+       <Form.Control onChange={(value) =>{
+         setdob(value.currentTarget.value);
+       }}  
          
          className="mt-1  w-75"
          style={{ borderRadius: "12px",marginLeft:'11%'}}
@@ -79,13 +90,7 @@ const Register = () => {
          placeholder="Date"
        />
 
-{/* <InputGroup>
-    <InputGroup.Radio aria-label="Radio button for following text input" />
-    <FormControl aria-label="Text input with radio button" />
-    <InputGroup.Radio aria-label="Radio button for following text input" />
-    <FormControl aria-label="Text input with radio button" /> 
-  </InputGroup> */}
-     
+
   
 
 

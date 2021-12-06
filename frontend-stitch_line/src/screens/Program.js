@@ -5,10 +5,9 @@ const Program = () => {
 
     const [pid, setPid] = useState("");
     const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [qty, setQty] = useState("");
-    const [cid, setCid] = useState("");
-    const [des, setDes] = useState("");
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+   
 
     const [searchId, setsearchId] = useState("");
      
@@ -52,16 +51,16 @@ const Program = () => {
               <Col md={3}>
                 <Form.Group className="mb-3 w-100">
                   <Form.Label>Start Date</Form.Label>
-                  <Form.Control type="date" value={price} onChange={(value) => {
-            setPrice(value.currentTarget.value);
+                  <Form.Control type="date" value={start} onChange={(value) => {
+            setStart(value.currentTarget.value);
           }} placeholder="Price" />
                 </Form.Group>
               </Col>
               <Col md={3}>
                 <Form.Group className="mb-3 w-100">
                   <Form.Label>End Date</Form.Label>
-                  <Form.Control type="date" value={qty} onChange={(value) => {
-            setQty(value.currentTarget.value);
+                  <Form.Control type="date" value={end} onChange={(value) => {
+            setEnd(value.currentTarget.value);
           }} placeholder="Qty" />
                 </Form.Group>
               </Col>
