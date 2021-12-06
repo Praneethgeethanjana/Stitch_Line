@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, NavLink, NavItem } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 
 const Header = () => {
   return (
@@ -21,8 +21,6 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link style={{ fontWeight: "bolder" }}>LOGIN</Nav.Link>
           </Nav>
-
-        
         </Navbar.Collapse>
       </Container>
     </Navbar>

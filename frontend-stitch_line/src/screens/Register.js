@@ -1,17 +1,94 @@
-import { Form, Button,InputGroup,FormControl } from "react-bootstrap";
-import { useState } from "react";
+import { Form, Button} from "react-bootstrap";
+import { useState} from "react";
+import axios from "axios";
+import { useHistory } from "react-router";
 
 
 
 const Register = () => {
 
+    const navigation = useHistory();
+
     const [username, setusername] = useState("");
     const [fullname,setfullname] = useState("");
     const [mobile,setmobile] = useState("");
     const [dob,setdob] = useState("");
-    const [gender,setgender] = useState("");
     const [password, setpassword] = useState("");
-   
+    const [confirm, setconfirm] = useState('');
+
+    const [errmsg, seterrmsg] = useState(false);
+    const [errmsgtext, seterrmsgtext] = useState('');
+  
+
+
+    function haveUserName() {
+      return axios({
+        method: 'GET',
+        url: `http://localhost:8080/api/v1/service/register/${username}`,
+      })
+        .then(res => {
+          return res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
+        // New Registration
+  //       function saveUser() {
+        
+  //         axios({
+  //           method: 'POST',
+  //           url: 'http://localhost:8080/api/v1/service/register',
+  //           data: {
+
+  //             username: username,
+  //             fullname: fullname,
+  //             mobile: mobile,
+  //             dob: dob,
+  //             password:password,
+  //           },
+  //         }).then(res => {
+  //           if (res.data) {
+  //             navigation.push('/program');
+  //           }
+  //         })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // }
+
+  function saveUser() {
+    haveUserName()
+      .then(result => {
+        if (result) {
+          seterrmsg(true);
+          seterrmsgtext('Email already exists');
+        } else if (password !== confirm) {
+          seterrmsg(true);
+          seterrmsgtext('Wrong password');
+        } else {
+          axios({
+            method: 'POST',
+            url: 'http://localhost:8080/api/v1/service/register',
+            data: {
+              username: username,
+              fullname: fullname,
+              mobile: mobile,
+              dob: dob,
+              password:password,
+            },
+          }).then(res => {
+            if (res.data) {
+              navigation.push("/program");
+            }
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
 
     return (
@@ -36,18 +113,7 @@ const Register = () => {
         </h6>
 
 
-        {/* <div class="p-6 card bordered"/>
-  <div class="form-control">
-    <label class="cursor-pointer label">
-      <span class="label-text">Neutral</span> 
-      <input type="radio" name="opt" checked="checked" class="radio" value=""/>
-    </label>
-  </div> 
-  <div class="form-control">
-    <label class="cursor-pointer label">
-      <span class="label-text">Primary</span> 
-      <input type="radio" name="opt" checked="checked" class="radio radio-primary" value=""/>
-    </label> */}
+  
   
         <Form.Control  onChange={(value) => {
             setusername(value.currentTarget.value);
@@ -91,8 +157,6 @@ const Register = () => {
        />
 
 
-  
-
 
         <Form.Control 
           onChange={(value) => {
@@ -109,7 +173,7 @@ const Register = () => {
              
   
         <Button
-        //   onClick={loginAdmin}
+         onClick={saveUser}
           className="mt-5"
           style={{ borderRadius: "12px", width: "130px",marginLeft:'60%' }}
           variant="outline-primary"
